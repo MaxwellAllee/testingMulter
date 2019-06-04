@@ -19,6 +19,9 @@
   },
   "homepage": "https://github.com/MaxwellAllee/testingMulter#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongojs": "^2.6.0",
+    "mongoose": "^5.5.12",
+    "morgan": "^1.9.1"
   }
 }

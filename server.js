@@ -1,32 +1,35 @@
 // Dependencies
-var express = require("express");
-var mongojs = require("mongojs");
-var logger = require("morgan");
-var app = express();
-const routes = require("./app/router");
-
+const express = require("express");
+const mongoose = require("mongoose");
+const logger = require("morgan");
+const app = express();
+const PORT = process.env.PORT || 3001;
+const Grid = require('gridfs-stream');
 app.use(logger("dev"));
 
 // Parse request body as JSON
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // Make public a static folder
-app.use(express.static("public"));
-
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("public"));
+}
+require("./app/router/apiRoutes")(app);
+require("./app/router/htmlRoutes")(app);
 // Database configuration
 var databaseUrl = "Test";
 var collections = ["photos"];
 
-// Hook mongojs config to db variable
-var db = mongojs(databaseUrl, collections);
+var conn = mongoose.createConnection(process.env.MONGODB_URI || "mongodb://localhost/photostore");
 
-// Log any mongojs errors to console
-db.on("error", function(error) {
-  console.log("Database Error:", error);
+let gfs
+conn.once('open', () => {
+  // Init stream
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection('uploads');
 });
+exports = {conn, gfs}
 
-
-// Listen on port 3000
-app.listen(3000, function() {
-  console.log("App running on port 3000!");
+app.listen(PORT, function() {
+  console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
 });

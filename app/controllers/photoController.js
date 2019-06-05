@@ -1,4 +1,7 @@
 const db = require("../models");
+const crypto = require('crypto');
+const mongoose = require('mongoose');
+const multer = require('multer');
 
 // Defining methods for the booksController
 module.exports = {
@@ -16,11 +19,7 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
-      console.log(req.body, "yo yo yo")
-    db.photos
-      .create(req.body)
-      .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).json(err));
+    
   },
   update: function(req, res) {
     db.photos

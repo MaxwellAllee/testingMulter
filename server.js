@@ -1,35 +1,21 @@
-// Dependencies
-const express = require("express");
-const mongoose = require("mongoose");
-const logger = require("morgan");
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const methodOverride = require('method-override');
 const app = express();
-const PORT = process.env.PORT || 3001;
-const Grid = require('gridfs-stream');
-app.use(logger("dev"));
+// Middleware
+app.use(bodyParser.json());
+app.use(methodOverride('_method'));
+var exphbs = require("express-handlebars");
 
-// Parse request body as JSON
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-// Make public a static folder
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("public"));
-}
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+// Mongo URI
+const mongoURI = 'mongodb://localhost/mongouploads';
+const conn = mongoose.createConnection(mongoURI);
+exports.mong = mongoURI
+exports.conn = conn
 require("./app/router/apiRoutes")(app);
-require("./app/router/htmlRoutes")(app);
-// Database configuration
-var databaseUrl = "Test";
-var collections = ["photos"];
-
-var conn = mongoose.createConnection(process.env.MONGODB_URI || "mongodb://localhost/photostore");
-
-let gfs
-conn.once('open', () => {
-  // Init stream
-  gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection('uploads');
-});
-exports = {conn, gfs}
-
-app.listen(PORT, function() {
-  console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
-});
+const port = 5001;
+app.listen(port, () => console.log(`Server started on port ${port}`));
+          // Check if files

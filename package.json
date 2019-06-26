@@ -1,28 +1,17 @@
 {
-  "name": "testingmulter",
+  "name": "y",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "watch": "nodemon server.js"
-  },
-  "repository": "git+https://github.com/MaxwellAllee/testingMulter.git",
-  "author": "killercodingmonkey <maxwell.w.allee@gmail.com>",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/MaxwellAllee/testingMulter/issues"
-  },
-  "homepage": "https://github.com/MaxwellAllee/testingMulter#readme",
+  "main": "index.js",
+  "repository": "https://github.com/MaxwellAllee/testingMulter.git",
+  "author": "maxwellallee <maxwell.w.allee@gmail.com>",
+  "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "crypto": "^1.0.1",
+    "ejs": "^2.6.1",
     "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
     "gridfs-stream": "^1.1.1",
-    "mongojs": "^2.6.0",
-    "mongoose": "^5.5.12",
-    "morgan": "^1.9.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.5.13",
     "multer": "^1.4.1",
     "multer-gridfs-storage": "^3.2.3"
   }
